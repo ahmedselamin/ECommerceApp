@@ -1,4 +1,5 @@
 global using EcommerceApp.Server.Data;
+global using EcommerceApp.Server.Services.ProductService;
 global using EcommerceApp.Shared;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,8 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
