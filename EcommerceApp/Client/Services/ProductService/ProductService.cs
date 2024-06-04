@@ -1,4 +1,5 @@
-﻿namespace EcommerceApp.Client.Services.ProductService
+﻿
+namespace EcommerceApp.Client.Services.ProductService
 {
     public class ProductService : IProductService
     {
@@ -10,6 +11,8 @@
         }
         public List<Product> Products { get; set; } = new List<Product>();
 
+        public event Action ProductsChanged;
+
         public async Task<ServiceResponse<Product>> GetProduct(int productId)
         {
             var result =
@@ -17,13 +20,16 @@
             return result;
         }
 
-        public async Task GetProducts()
+        public async Task GetProducts(string? categoryUrl = null)
         {
-            var result =
-                await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product");
+            var result = categoryUrl == null ?
+                await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product") :
+                await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>($"api/product/{categoryUrl}");
 
             if (result != null && result.Data != null)
                 Products = result.Data;
+
+            ProductsChanged.Invoke();
         }
     }
 }
