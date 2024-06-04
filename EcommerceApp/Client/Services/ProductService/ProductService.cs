@@ -22,14 +22,13 @@ namespace EcommerceApp.Client.Services.ProductService
 
         public async Task GetProducts(string? categoryUrl = null)
         {
-            var result = categoryUrl == null ?
-                await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product") :
-                await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>($"api/product/{categoryUrl}");
+            var apiUrl = categoryUrl == null ? "api/product" : $"api/product/{categoryUrl}";
+            var result = await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>(apiUrl);
 
-            if (result != null && result.Data != null)
-                Products = result.Data;
+            Products = result?.Data ?? Products;
 
             ProductsChanged.Invoke();
+
         }
     }
 }
