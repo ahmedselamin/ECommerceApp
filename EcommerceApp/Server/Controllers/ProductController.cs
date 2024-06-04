@@ -22,9 +22,9 @@ namespace EcommerceApp.Server.Controllers
         }
 
         [HttpGet("{productId}")]
-        public async Task<ActionResult<ServiceResponse<Product>>> GetProduct(int id)
+        public async Task<ActionResult<ServiceResponse<Product>>> GetProduct(int productId)
         {
-            var result = await _productService.GetProduct(id);
+            var result = await _productService.GetProduct(productId);
 
             return Ok(result);
         }

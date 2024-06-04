@@ -10,23 +10,6 @@ namespace EcommerceApp.Server.Services.ProductService
             _context = context;
         }
 
-        public async Task<ServiceResponse<Product>> GetProduct(int productId)
-        {
-            var response = new ServiceResponse<Product>();
-            var product = await _context.Products.FindAsync(productId);
-            if (product == null)
-            {
-                response.Success = false;
-                response.Message = "Sorry, This Product Does not Exist!";
-            }
-            else
-            {
-                response.Data = product;
-            }
-
-            return response;
-        }
-
         public async Task<ServiceResponse<List<Product>>> GetProducts()
         {
             var response = new ServiceResponse<List<Product>>
@@ -36,5 +19,25 @@ namespace EcommerceApp.Server.Services.ProductService
 
             return response;
         }
+
+        public async Task<ServiceResponse<Product>> GetProduct(int productId)
+        {
+            var response = new ServiceResponse<Product>();
+
+            var product = await _context.Products.FindAsync(productId);
+            if (product == null)
+            {
+                response.Success = false;
+                response.Message = "Product Not Found!";
+            }
+            else
+            {
+                response.Data = product;
+            }
+
+            return response;
+        }
+
+
     }
 }
