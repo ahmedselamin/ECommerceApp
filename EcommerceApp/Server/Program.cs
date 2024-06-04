@@ -1,4 +1,5 @@
 global using EcommerceApp.Server.Data;
+global using EcommerceApp.Server.Services.CategoryService;
 global using EcommerceApp.Server.Services.ProductService;
 global using EcommerceApp.Shared;
 global using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
