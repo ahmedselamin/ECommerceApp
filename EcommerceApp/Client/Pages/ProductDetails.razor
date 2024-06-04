@@ -31,7 +31,8 @@ else
         message = "Loading product...";
 
         var result = await ProductService.GetProduct(Id);
-        if (!result.Success)
+
+        if(!result.Success)
         {
             message = result.Message;
         }
@@ -39,5 +40,6 @@ else
         {
             product = result.Data;
         }
+
     }
 }
