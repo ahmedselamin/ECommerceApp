@@ -14,7 +14,7 @@ namespace EcommerceApp.Server.Services.ProductService
         {
             var response = new ServiceResponse<List<Product>>
             {
-                Data = await _context.Products.ToListAsync()
+                Data = await _context.Products.Include(p => p.Variants).ToListAsync()
             };
 
             return response;
@@ -47,6 +47,7 @@ namespace EcommerceApp.Server.Services.ProductService
             {
                 Data = await _context.Products
                             .Where(p => p.Category.Url.ToLower().Equals(categoryUrl.ToLower()))
+                            .Include(p => p.Variants)
                             .ToListAsync()
             };
 
